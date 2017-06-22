@@ -13,5 +13,3 @@ zipdatadesty <- "C:\\Users\\sheri\\Downloads\\specdata.zip"
 #> download.file(URL, destfile)
 
 download.file(zipdataurl, zipdatadesty)
-
-x <- 1
