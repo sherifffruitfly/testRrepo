@@ -14,10 +14,16 @@ zipData.File <- "specdata.zip"
 # one way or the other, we start with a clean directory
 if(!dir.exists(zipData.Folder))
 {
+  print(paste("creating zipdata.folder: ", zipData.Folder))
   dir.create(zipData.Folder)
+  
+  print(paste("creating zipdatafiles.folder subdir: ", zipDataFiles.Folder))
   dir.create(paste(zipData.Folder, zipDataFiles.Folder))
+  
+  print("all done making directories")
 } else
 {
+  print("data directories already exist - wiping files for a clean start")
   file.remove(dir(path=zipData.Folder, pattern="*.*"))
 }
 
