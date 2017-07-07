@@ -1,9 +1,7 @@
 cumulative_mean <- function(prev_step=c(1, 0), new_data=c())
 {
-  options(expressions=100000)
-  
   # easy sample data argument: new_data=sample(0:100,100,replace=T)
-  
+   
   if (length(new_data) == 0)
   {
     return("done!")
@@ -28,4 +26,22 @@ cumulative_mean <- function(prev_step=c(1, 0), new_data=c())
     
     return(cumulative_mean(c(new_tick, new_mean), new_data[-1]))
   }
+}
+
+CM_control <- function(mr=3, data=c())
+{
+  oldw <- getOption("warn")
+  options(warn = -1)
+  
+  max_rows <- mr
+  length(data) <- prod(dim(matrix(data, nrow=max_rows)))
+  data_matrix <- matrix(data, nrow=max_rows)
+  
+  options(warn = oldw)
+  
+  print(data_matrix)
+  
+  #apply(counts, 2, max)
+  #apply(data_matrix, 2, cumulative_mean)
+  #HOW TO PASS THE NEW_DATA ARG TO CUMULATIVE_MEAN???
 }
