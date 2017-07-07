@@ -12,10 +12,17 @@ cumulative_mean <- function(prev_step=c(1, 0), new_data=c())
   {
     #prev_step[1] = current time tick step
     #prev_step[2] = previous mean
-    
-    new_mean <- ((prev_step[1] - 1) / prev_step[1] * prev_step[2]) + ((1/prev_step[1]) * new_data[1])
-    new_tick <- prev_step[1] + 1
-    
+
+    if (!is.na(new_data[1]))
+    {
+      new_mean <- ((prev_step[1] - 1) / prev_step[1] * prev_step[2]) + ((1/prev_step[1]) * new_data[1])
+      new_tick <- prev_step[1] + 1
+    }
+    else
+    {
+      new_tick <- prev_step[1]
+      new_mean <- prev_step[2]
+    }
     result <- c(prev_step[1], new_data[1], new_mean)
     print(result)
     
