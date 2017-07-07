@@ -1,5 +1,7 @@
 cumulative_mean <- function(prev_step=c(1, 0), new_data=c())
 {
+  options(expressions=100000)
+  
   # easy sample data argument: new_data=sample(0:100,100,replace=T)
   
   if (length(new_data) == 0)
