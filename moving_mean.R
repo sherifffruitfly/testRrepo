@@ -1,16 +1,12 @@
 cumulative_mean <- function(prev_step=c(1, 0), new_data=c())
 {
-  # easy sample data argument: new_data=sample(0:100,100,replace=T)
-   
-  if (length(new_data) == 0)
-  {
-    return("done!")
-  }
-  else
+  # easy sample data argument: cumulative_mean(new_data=sample(0:100,100,replace=T))
+
+  if (length(new_data) > 0)
   {
     #prev_step[1] = current time tick step
     #prev_step[2] = previous mean
-
+    
     if (!is.na(new_data[1]))
     {
       new_mean <- ((prev_step[1] - 1) / prev_step[1] * prev_step[2]) + ((1/prev_step[1]) * new_data[1])
@@ -25,7 +21,13 @@ cumulative_mean <- function(prev_step=c(1, 0), new_data=c())
     print(result)
     
     return(cumulative_mean(c(new_tick, new_mean), new_data[-1]))
+  }  
+  else
+  {
+    result <- c(prev_step[1]-1, prev_step[2])
+    return(result)
   }
+  
 }
 
 CM_control <- function(data=c(), mr=floor(sqrt(length(data))))
