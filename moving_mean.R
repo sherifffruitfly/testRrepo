@@ -28,7 +28,7 @@ cumulative_mean <- function(prev_step=c(1, 0), new_data=c())
   }
 }
 
-CM_control <- function(mr=3, data=c())
+CM_control <- function(data=c(), mr=floor(sqrt(length(data))))
 {
   oldw <- getOption("warn")
   options(warn = -1)
@@ -41,7 +41,8 @@ CM_control <- function(mr=3, data=c())
   
   print(data_matrix)
   
-  #apply(counts, 2, max)
-  #apply(data_matrix, 2, cumulative_mean)
-  #HOW TO PASS THE NEW_DATA ARG TO CUMULATIVE_MEAN???
+  #1) pass column by column to cumulative_mean
+    #SO HOW DO I DO THIS???
+  #2) after each, harvest the mean and # of data points
+  #3) after all columns done, perform cumulative mean on that set of sub-means - VOILA!
 }
