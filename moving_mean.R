@@ -43,8 +43,14 @@ CM_control <- function(data=c(), mr=floor(sqrt(length(data))))
   
   print(data_matrix)
   
-  #1) pass column by column to cumulative_mean
-    #SO HOW DO I DO THIS???
-  #2) after each, harvest the mean and # of data points
-  #3) after all columns done, perform cumulative mean on that set of sub-means - VOILA!
+  seed <- c(1, 0)
+  result_list <- c()
+  for (i in 1:ncol(data_matrix))
+  {
+    seed <- cumulative_mean(seed, data_matrix[,i])
+    result_list <- c(result_list, seed)
+  next
+  }
+    
+  print(result_list)
 }
