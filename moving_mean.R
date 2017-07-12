@@ -1,6 +1,6 @@
 cumulative_mean <- function(prev_step=c(1, 0), data=c())
 {
-  # easy sample data argument: cumulative_mean(new_data=sample(0:100,100,replace=T))
+  # calculates mean cumulatively by recursion against obvious recurrence formula for mean
 
   if (length(data) > 0)
   {
@@ -65,7 +65,7 @@ CM_control <- function(data=c(), mr=floor(sqrt(length(data))))
   time.taken <- end.time - start.time
   print(paste("ET: ", time.taken))
   
-  return(seed)
+  return(matrix(result_list, ncol=2, byrow=TRUE))
     
   #print(matrix(result_list, ncol=2, byrow=TRUE))
 }
