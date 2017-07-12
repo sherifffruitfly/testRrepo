@@ -32,6 +32,11 @@ cumulative_mean <- function(prev_step=c(1, 0), data=c())
 
 CM_control <- function(data=c(), mr=floor(sqrt(length(data))))
 {
+  # Avoids recursion stack overflow in cumulative_mean function by breaking the input into smaller chunks and feeding
+  # intermediate results back into cum_mean
+  # This computes the entire mean cumulatively. I would be easily adapted to parallelization by collecting the column means
+  # indivdually, and then cum_mean-ing them as last step
+  
   oldw <- getOption("warn")
   options(warn = -1)
   
