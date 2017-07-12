@@ -70,7 +70,9 @@ CM_control <- function(data=c(), mr=floor(sqrt(length(data))))
   time.taken <- end.time - start.time
   print(paste("ET: ", time.taken))
   
-  return(matrix(result_list, ncol=2, byrow=TRUE))
+  result_matrix <- matrix(result_list, ncol=2, byrow=TRUE)
+  matplot(result_matrix[,1], result_matrix[,2], type="b", pch=0)
+  return(result_matrix)
     
   #print(matrix(result_list, ncol=2, byrow=TRUE))
 }
