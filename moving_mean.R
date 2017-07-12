@@ -18,7 +18,7 @@ cumulative_mean <- function(prev_step=c(1, 0), new_data=c())
       new_mean <- prev_step[2]
     }
     result <- c(prev_step[1], new_data[1], new_mean)
-    print(result)
+    #print(result)
     
     return(cumulative_mean(c(new_tick, new_mean), new_data[-1]))
   }  
@@ -48,9 +48,11 @@ CM_control <- function(data=c(), mr=floor(sqrt(length(data))))
   for (i in 1:ncol(data_matrix))
   {
     seed <- cumulative_mean(seed, data_matrix[,i])
-    result_list <- c(result_list, seed)
+    result_list <- c(result_list, c(seed))
+    
+    print(c(i, seed))
   next
   }
     
-  print(result_list)
+  print(matrix(result_list, ncol=2, byrow=TRUE))
 }
