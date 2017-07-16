@@ -73,7 +73,7 @@ CM_control <- function(data=c(), mr=floor(sqrt(length(data))))
   
   end.time <- Sys.time()
   time.taken <- end.time - start.time
-  print(paste("ET: ", time.taken))
+  #print(paste("ET: ", time.taken))
   
   result_matrix <- matrix(result_list, ncol=2, byrow=TRUE)
   matplot(result_matrix[,1], result_matrix[,2], type="b", pch=0, xlab="Step", ylab="Average")
