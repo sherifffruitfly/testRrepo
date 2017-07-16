@@ -1,7 +1,7 @@
 pollutantmean <- function(directory="specdata", pollutant="sulfate", id=1:332)
 {
   # this can be set more finely based on filename if desired, say a TRUST_DATA_ENTRY flag
-  setwd(paste("C:\\", directory))
+  setwd(paste("C:\\", directory, sep=""))
   filePattern <- "\\.csv$"
   csvFiles <- list.files(pattern=filePattern)
   
@@ -11,6 +11,12 @@ pollutantmean <- function(directory="specdata", pollutant="sulfate", id=1:332)
     ans <- NA
     for (i in id)
     {
+      if (i %% 1 != 0 || i < 1)
+      {
+        print(paste("skipping ", i, sep=" "))
+        next  # we only attempt to process positive integers
+      }
+      
       #print(i)
       #print(csvFiles[i])
       result <- tryCatch(
@@ -40,16 +46,23 @@ pollutantmean <- function(directory="specdata", pollutant="sulfate", id=1:332)
       )
     next
     }
-    
   }
   else
   {
     print("No matching files to process.")
   }
   
-  ans <- CM_control(c(data[[pollutant]]))
-  #print(paste(i, tail(ans, n=1)[1], tail(ans, n=1)[2], sep=" "))
-  print(tail(ans, n=1)[2])
+  if (pollutant %in% colnames(data))
+  {
+    ans <- CM_control(c(data[[pollutant]]))
+    colnames(ans) <- c("Observations", "Mean")
+    print(tail(ans, n=1)[2])
+    #print(tail(ans, n=1))
+  }
+  else
+  {
+    stop(paste("Column", pollutant, "does not exist in the dataset. Breaking execution.", sep=" "))
+  }
 }
 
 
