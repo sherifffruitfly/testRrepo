@@ -1,5 +1,8 @@
 pollutantmean <- function(directory="C:\\specdata", pollutant="sulfate", id=1:332)
 {
+  #let's see if this works
+  source('C:/cdjProgramming/testRrepo/moving_mean.R')
+  
   # 1) get all csv files in DIRECTORY
   # 2) if 0, then quit with msg
 
@@ -13,34 +16,29 @@ pollutantmean <- function(directory="C:\\specdata", pollutant="sulfate", id=1:33
     data <- c()
     for (i in 1:length(csvFiles))
     {
-      #print(paste("file ", i, " - ", csvFiles[i]))
-      if (i == 1)
-      {
         result <- tryCatch(
           {
-            data <- read.csv(file=csvFiles[i], skip = 000, nrows=2000)
-            print(nrow(data))
+            data <- read.csv(file=csvFiles[i], skip = 0000, nrows=10000)
+            print(paste("file ", i, " - ", csvFiles[i], " ", nrow(data), " rows", " ", CM_control(data[,2])))
           }
           , warning <- function(w)
           {
             x <- 1
-            print("warning")
+            print(paste("file ", i, " - ", csvFiles[i], " ", nrow(data), " rows", " WARNING"))
             #warning-handler-code
           }
           , error = function(e)
           {
             x <- 1
-            print("error")
-            #error-handler-code
+            print(paste("file ", i, " - ", csvFiles[i], " ", nrow(data), " rows", " ERROR"))
+            #WHEN I BREAK THE READ INTO CHUNKS THIS MEANS I HIT EOF
           }
           , finally <- 
           {
-            print("finally")
+            #print("finally")
             #cleanup-code
           }
-        )
-      }
-      
+    )
     next
   }
     }
