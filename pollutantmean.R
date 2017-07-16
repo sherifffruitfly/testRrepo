@@ -38,7 +38,7 @@ pollutantmean <- function(directory="C:\\specdata", pollutant="sulfate", id=1:33
         #print(paste(i, "ans", sep=" "))
     )
 
-    print(paste(i, tail(ans, n=1), sep=" "))
+    print(paste(i, tail(ans, n=1)[1], tail(ans, n=1)[2], sep=" "))
 
     next
   }
