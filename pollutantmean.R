@@ -11,7 +11,7 @@ pollutantmean <- function(directory="C:\\specdata", pollutant="sulfate", id=1:33
   {
     data <- c()
     ans <- NA
-    for (i in 1:length(csvFiles))
+    for (i in id)
     {
         result <- tryCatch(
         {
