@@ -81,3 +81,4 @@ CM_control <- function(data=c(), mr=floor(sqrt(length(data))))
     
   #print(matrix(result_list, ncol=2, byrow=TRUE))
 }
+
