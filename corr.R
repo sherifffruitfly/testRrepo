@@ -1,6 +1,7 @@
 corr <- function(directory="specdata", threshold=0)
 {
-  source("c:\\cdjProgramming\\testRrepo\\complete.R")
+  source("C:\\cdjProgramming\\coursera\\r\\_scratch\\firstgithubproject\\complete.R")
+  #source("c:\\cdjProgramming\\testRrepo\\complete.R")
   
   result <- tryCatch(
     {
@@ -27,8 +28,7 @@ corr <- function(directory="specdata", threshold=0)
   if (length(csvFiles) > 0)
   {
     data <- c()
-    
-    ans <-data.frame()
+    ans <- numeric()
     for (i in 1:length(csvFiles))
     {
       if (i %% 1 != 0 || i < 1)
@@ -41,6 +41,7 @@ corr <- function(directory="specdata", threshold=0)
       #print(csvFiles[i])
       result <- tryCatch(
         {
+          #print("before reading file")
           data <- read.csv(file=csvFiles[i], skip = 0000, nrows=10000)
           
           #print(paste("before: ", nrow(data)))
@@ -48,8 +49,13 @@ corr <- function(directory="specdata", threshold=0)
           #print(paste("after: ", nrow(data)))
           if (nrow(data) > threshold)
           {
-            ans <- rbind(ans, c(i, nrow(data)))
-            # 1) pass the data col value straight to corr, and make vector of actual answers
+            correl <- cor(data$sulfate, data$nitrate)
+            #print(correl)
+            ans <- c(ans, correl)
+          }
+          else
+          {
+            #print("blocked")
           }
         }
         , warning <- function(w)
@@ -58,7 +64,7 @@ corr <- function(directory="specdata", threshold=0)
         }
         , error = function(e)
         {
-          #print(paste("file ", i, " - ", csvFiles[i], " ", nrow(data), " rows", " ERROR"))
+          print(paste("file ", i, " - ", csvFiles[i], " ", nrow(data), " rows", " ERROR: ", e))
           #WHEN I BREAK THE READ INTO CHUNKS THIS MEANS I HIT EOF (OR NO FILE)
         }
         , finally <- 
@@ -78,7 +84,7 @@ corr <- function(directory="specdata", threshold=0)
     print("No matching files to process.")
   }
   
-  names(ans)<-c("id","nobs")
+  #names(ans)<-c("Correlation")
   return(ans)
   
 }
