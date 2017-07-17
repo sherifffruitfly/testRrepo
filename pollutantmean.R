@@ -1,7 +1,24 @@
 pollutantmean <- function(directory="specdata", pollutant="sulfate", id=1:332)
 {
-  # this can be set more finely based on filename if desired, say a TRUST_DATA_ENTRY flag
-  setwd(paste("C:\\", directory, sep=""))
+  result <- tryCatch(
+    {
+      fullpath <- paste("C:\\", directory, sep="")
+      setwd(fullpath)
+    }
+    , warning = function(w) 
+    {
+      #warning-handler-code
+    }
+    , error = function(e) 
+    {
+      stop(paste("Error setting working directory ", fullpath, " :\n\n", e))
+    }
+    , finally <-  
+    {
+      #cleanup-code
+    }
+  )
+  
   filePattern <- "\\.csv$"
   csvFiles <- list.files(pattern=filePattern)
   
