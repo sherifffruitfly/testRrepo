@@ -1,14 +1,33 @@
-complete <- function(directory="C:\\specdata", id=1:332)
+complete <- function(directory="specdata", id=1:332)
 {
-  # this can be set more finely based on filename if desired, say a TRUST_DATA_ENTRY flag
-  setwd(paste("C:\\", directory, sep=""))
+  result <- tryCatch(
+    {
+      fullpath <- paste("C:\\", directory, sep="")
+      setwd(fullpath)
+    }
+    , warning = function(w) 
+    {
+      #warning-handler-code
+    }
+    , error = function(e) 
+    {
+      stop(paste("Error setting working directory ", fullpath, " :\n\n", e))
+    }
+    , finally <-  
+    {
+      #cleanup-code
+    }
+  )
+  
   filePattern <- "\\.csv$"
   csvFiles <- list.files(pattern=filePattern)
   
   if (length(csvFiles) > 0)
   {
     data <- c()
-    ans <- NA
+    
+    ans <-data.frame()
+    #names(ans)<-c("id","nobs")
     for (i in id)
     {
       if (i %% 1 != 0 || i < 1)
@@ -21,10 +40,12 @@ complete <- function(directory="C:\\specdata", id=1:332)
       #print(csvFiles[i])
       result <- tryCatch(
         {
-          data <- rbind(data, read.csv(file=csvFiles[i], skip = 0000, nrows=10000))
-          #print(nrow(data))
-          #ans <- CM_control(c(data[[pollutant]]))
-          #print(paste("file ", i, " - ", csvFiles[i], " ", nrow(data), " rows", " ", CM_control(data[,2])))
+          data <- read.csv(file=csvFiles[i], skip = 0000, nrows=10000)
+          
+          #print(paste("before: ", nrow(data)))
+          data <- na.omit(data)
+          #print(paste("after: ", nrow(data)))
+          ans <- rbind(ans, c(i, nrow(data)))
         }
         , warning <- function(w)
         {
@@ -51,14 +72,8 @@ complete <- function(directory="C:\\specdata", id=1:332)
   {
     print("No matching files to process.")
   }
-  
-  
-  
-  # return dataframe like:
-  # id  nobs
-  # 1   234
-  # 2   9053
-  # 3   342
-  #
-  # here nobs indicates the total # of COMPLETE observations - neither sulfate nor nitrate are NA
+
+  colnames(ans) <- c("id, nobs")
+  return(ans)
+
 }
