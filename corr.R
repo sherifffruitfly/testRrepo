@@ -1,5 +1,7 @@
-complete <- function(directory="specdata", id=1:332)
+corr <- function(directory="specdata", threshold=0)
 {
+  source("c:\\cdjProgramming\\testRrepo\\complete.R")
+  
   result <- tryCatch(
     {
       fullpath <- paste("C:\\", directory, sep="")
@@ -27,7 +29,7 @@ complete <- function(directory="specdata", id=1:332)
     data <- c()
     
     ans <-data.frame()
-    for (i in id)
+    for (i in 1:length(csvFiles))
     {
       if (i %% 1 != 0 || i < 1)
       {
@@ -44,7 +46,11 @@ complete <- function(directory="specdata", id=1:332)
           #print(paste("before: ", nrow(data)))
           data <- na.omit(data)
           #print(paste("after: ", nrow(data)))
-          ans <- rbind(ans, c(i, nrow(data)))
+          if (nrow(data) > threshold)
+          {
+            ans <- rbind(ans, c(i, nrow(data)))
+            # 1) pass the data col value straight to corr, and make vector of actual answers
+          }
         }
         , warning <- function(w)
         {
