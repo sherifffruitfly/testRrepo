@@ -27,7 +27,6 @@ complete <- function(directory="specdata", id=1:332)
     data <- c()
     
     ans <-data.frame()
-    #names(ans)<-c("id","nobs")
     for (i in id)
     {
       if (i %% 1 != 0 || i < 1)
@@ -72,8 +71,8 @@ complete <- function(directory="specdata", id=1:332)
   {
     print("No matching files to process.")
   }
-
-  colnames(ans) <- c("id, nobs")
+  
+  names(ans)<-c("id","nobs")
   return(ans)
 
 }
